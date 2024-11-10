@@ -1,8 +1,8 @@
 class Mk < Formula
     desc "A lightweight and efficient tool designed to manage and run commands at the project level."
     homepage "https://github.com/uname-n/mk"
-    url "https://github.com/uname-n/mk/archive/refs/tags/v2.0.1.tar.gz"
-    sha256 "4cb9b43387cb4eea6cddb585114cb118d0ee317e0faab2de941885bd8e838071"
+    url "https://github.com/uname-n/mk/archive/refs/tags/v2.1.0.tar.gz"
+    sha256 "f4e9a213eb7c695042df95207cc76eeaff9d6a71acd1b7a02abe00c61361a92c"
     license "GPL-3.0"
   
     depends_on "rust" => :build
