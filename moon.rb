@@ -1,4 +1,4 @@
-class Mk < Formula
+class Moon < Formula
     desc "Moon"
     homepage "https://github.com/uname-n/moon"
     url "https://github.com/uname-n/moon/archive/refs/tags/0.0.0.tar.gz"
