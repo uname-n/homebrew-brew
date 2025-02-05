@@ -1,8 +1,8 @@
 class Moon < Formula
     desc "Moon"
     homepage "https://github.com/uname-n/moon"
-    url "https://github.com/uname-n/moon/archive/refs/tags/0.0.0.tar.gz"
-    sha256 "6371697daa0436ef5f779bacf21b1bde3f78b29e6fc82de2a2c18ed394e96a48"
+    url "https://github.com/uname-n/moon/archive/refs/tags/0.0.1.tar.gz"
+    sha256 "9fa01297b4baca9e908815fa523d7f43e0acad653b8c33b4d2cdddbbc521a7ae"
     license "GPL-3.0"
   
     depends_on "rust" => :build
