@@ -41,9 +41,12 @@ jobs:
           rm "$FORMULA_PATH.bak"
 
       - name: Commit and push changes
+        env:
+          PAT: ${{ secrets.PAT }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add git-issue.rb
           git diff --cached --quiet || git commit -m "Update git-issue formula to ${{ steps.release.outputs.tag_name }}"
+          git remote set-url origin https://github-actions:${PAT}@github.com/uname-n/homebrew-brew.git
           git push
