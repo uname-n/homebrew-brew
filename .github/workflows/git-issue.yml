@@ -1,0 +1,49 @@
+name: Update git-issue Formula
+
+on:
+  repository_dispatch:
+    types: [git-issue-release]
+
+jobs:
+  update-git-issue-formula:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout homebrew-brew
+        uses: actions/checkout@v4
+
+      - name: Fetch latest git-issue release info
+        id: release
+        run: |
+          API_URL="https://api.github.com/repos/uname-n/git-issue/releases/latest"
+          RELEASE_JSON=$(curl -s $API_URL)
+          TAG_NAME=$(echo "$RELEASE_JSON" | jq -r .tag_name)
+          VERSION="${TAG_NAME#v}"
+          TARBALL_URL="https://github.com/uname-n/git-issue/archive/refs/tags/${TAG_NAME}.tar.gz"
+          echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "tarball_url=$TARBALL_URL" >> $GITHUB_OUTPUT
+
+      - name: Download release tarball
+        run: |
+          curl -L "${{ steps.release.outputs.tarball_url }}" -o source.tar.gz
+
+      - name: Compute SHA256
+        id: sha
+        run: |
+          SHA256=$(sha256sum source.tar.gz | awk '{print $1}')
+          echo "sha256=$SHA256" >> $GITHUB_OUTPUT
+
+      - name: Update git-issue.rb formula in-place
+        run: |
+          FORMULA_PATH="git-issue.rb"
+          sed -i.bak "s|^  url \".*\"|  url \"${{ steps.release.outputs.tarball_url }}\"|" "$FORMULA_PATH"
+          sed -i.bak "s|^  sha256 \".*\"|  sha256 \"${{ steps.sha.outputs.sha256 }}\"|" "$FORMULA_PATH"
+          rm "$FORMULA_PATH.bak"
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add git-issue.rb
+          git diff --cached --quiet || git commit -m "Update git-issue formula to ${{ steps.release.outputs.tag_name }}"
+          git push
