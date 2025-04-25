@@ -50,7 +50,7 @@ jobs:
           git add git-issue.rb
           if ! git diff --cached --quiet; then
             git commit -m "Update git-issue formula to ${{ steps.release.outputs.tag_name }}"
-            git push origin HEAD:main
+            git push origin HEAD:master
           else
             echo "No changes to commit"
           fi
