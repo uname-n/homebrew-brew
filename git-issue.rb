@@ -1,8 +1,8 @@
 class GitIssue < Formula
   desc "A tool to manage git issues"
   homepage "https://github.com/uname-n/git-issue"
-  url "https://github.com/uname-n/git-issue/archive/refs/tags/0.0.1.tar.gz"
-  sha256 "4d6e0bf937c795e51220dbcb2545b8df4a343c2911d80a2f94d4ba50f9e3dcd5"
+  url "https://github.com/uname-n/git-issue/archive/refs/tags/0.0.2.tar.gz"
+  sha256 "94c99ecde36d257d55c39ace0df135f71a6e47c843363e3d65c232128f8b7af9"
   license "MIT"
 
   depends_on "rust" => :build
